@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{5B5993FE-C2E5-4EEA-BDAA-506205805522}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61D80944-4C7E-43D3-941A-EE9DA3667AA4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6E138C32-1532-4A67-ADBC-7D2219E87FEB}"
-EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "EthereumUI", "ui\EthereumUI\EthereumUI.njsproj", "{DFD09587-FC86-4D0C-8B20-633E56BAED59}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumApi", "src\EthereumApi\EthereumApi.csproj", "{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8}"
 EndProject
@@ -21,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DFD09587-FC86-4D0C-8B20-633E56BAED59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFD09587-FC86-4D0C-8B20-633E56BAED59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFD09587-FC86-4D0C-8B20-633E56BAED59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFD09587-FC86-4D0C-8B20-633E56BAED59}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,7 +30,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DFD09587-FC86-4D0C-8B20-633E56BAED59} = {5B5993FE-C2E5-4EEA-BDAA-506205805522}
 		{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8} = {6E138C32-1532-4A67-ADBC-7D2219E87FEB}
 		{69A38365-4710-4387-B0E4-3858E37457FA} = {61D80944-4C7E-43D3-941A-EE9DA3667AA4}
 	EndGlobalSection

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using EthereumApi.Framework.Services;
 
 namespace EthereumApi
 {
@@ -21,12 +22,6 @@ namespace EthereumApi
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -43,6 +38,18 @@ namespace EthereumApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHttpClient<IInfuraApiClient, InfuraApiApiClient>(client =>
+            {
+                // https://mainnet.infura.io/v3/22b2ebe2940745b3835907b30e8257a4
+                client.BaseAddress = new Uri(Configuration["INFURA_URI"]);
+            });
         }
     }
 }
