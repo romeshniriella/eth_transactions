@@ -12,7 +12,8 @@ namespace EthereumApi.Tests.TestDoubles
         }
 
         public List<string> BlockNumberRequests { get; }
-        public Queue<BlockResult> ResponseQueue { get; private set; }
+
+        private Queue<BlockResult> ResponseQueue { get; set; }
 
         public override Task<BlockResult> GetBlockByNumber(string hexBlockNumber)
         {

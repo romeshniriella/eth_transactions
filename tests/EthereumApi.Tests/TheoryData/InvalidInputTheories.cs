@@ -15,30 +15,35 @@ namespace EthereumApi.Tests.TheoryData
                 BlockNumber = 0,
                 ExpectedExceptionType = typeof(ArgumentException)
             });
+
             Add("invalid block number:-1", new InvalidInputTheoryData
             {
                 BlockNumber = -1,
                 ExpectedExceptionType = typeof(ArgumentException)
             });
+
             Add("invalid address:null", new InvalidInputTheoryData
             {
                 BlockNumber = 8754823,
                 Address = null,
                 ExpectedExceptionType = typeof(ArgumentException)
             });
+
             Add("invalid address:0", new InvalidInputTheoryData
             {
                 BlockNumber = 8754823,
                 Address = "0",
                 ExpectedExceptionType = typeof(ArgumentException)
             });
+
             Add("invalid address:abc", new InvalidInputTheoryData
             {
                 BlockNumber = 8754823,
                 Address = "abc",
                 ExpectedExceptionType = typeof(ArgumentException)
             });
-            Add("invalid block result", new InvalidInputTheoryData
+
+            Add("invalid block search result from API", new InvalidInputTheoryData
             {
                 BlockNumber = 8754823,
                 Address = "0xc55eddadee",
