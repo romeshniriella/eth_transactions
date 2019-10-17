@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace EthereumApi.Tests
@@ -8,7 +7,6 @@ namespace EthereumApi.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

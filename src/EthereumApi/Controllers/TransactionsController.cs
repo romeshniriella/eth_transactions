@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using EthereumApi.Framework.DTO;
 using EthereumApi.Framework.Services;
 
 namespace EthereumApi.Controllers
@@ -11,17 +11,27 @@ namespace EthereumApi.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly IInfuraApiClient _infuraApiClient;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionsController(IInfuraApiClient infuraApiClient)
+        public TransactionsController(ITransactionService transactionService)
         {
-            _infuraApiClient = infuraApiClient;
+            _transactionService = transactionService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<EthereumTransaction>>> Get(string id)
+        [HttpGet("{blockNumber}/{address}")]
+        public async Task<ActionResult<List<Transaction>>> Get(int blockNumber, string address)
         {
-            return await _infuraApiClient.SearchBlock(id);
+            if (blockNumber <= 0)
+            {
+                throw new ArgumentException("Invalid block number");
+            }
+
+            if (string.IsNullOrEmpty(address))
+            {
+                throw new ArgumentException("Invalid address");
+            }
+
+            return await _transactionService.SearchTransactions(blockNumber.ToString("X"), address);
         }
     }
 }
