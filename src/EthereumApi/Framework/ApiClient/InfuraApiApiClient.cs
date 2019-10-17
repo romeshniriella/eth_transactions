@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using EthereumApi.Framework.DTO;
 using Newtonsoft.Json;
 
@@ -9,10 +10,12 @@ namespace EthereumApi.Framework.ApiClient
     public class InfuraApiApiClient : IInfuraApiClient
     {
         private readonly HttpClient _client;
+        private readonly ILogger<InfuraApiApiClient> _logger;
 
-        public InfuraApiApiClient(HttpClient client)
+        public InfuraApiApiClient(HttpClient client, ILogger<InfuraApiApiClient> logger)
         {
             _client = client;
+            _logger = logger;
         }
 
         public async Task<BlockResult> GetBlockByNumber(string hexBlockNumber)
@@ -22,10 +25,10 @@ namespace EthereumApi.Framework.ApiClient
             {
                 Id = 1,
                 Method = "eth_getBlockByNumber",
-                Params = new[]
+                Params = new object[]
                 {
                     hexBlockNumber // BLOCK PARAMETER
-                    , "true" // SHOW TRANSACTION DETAILS FLAG
+                    , true // SHOW TRANSACTION DETAILS FLAG
                 }
             };
 
@@ -41,6 +44,8 @@ namespace EthereumApi.Framework.ApiClient
                     Transactions = block.Result.Transactions
                 };
             }
+
+            _logger.LogError(block.Error?.Message ?? $"Could not find any results for {hexBlockNumber}");
 
             return BlockResult.Empty;
         }

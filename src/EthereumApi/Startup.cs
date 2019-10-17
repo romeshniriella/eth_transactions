@@ -43,7 +43,7 @@ namespace EthereumApi
             services.AddHttpClient<IInfuraApiClient, InfuraApiApiClient>(client =>
             {
                 // https://mainnet.infura.io/v3/22b2ebe2940745b3835907b30e8257a4
-                client.BaseAddress = new Uri(Configuration["INFURA_URI"]);
+                client.BaseAddress = new Uri(Configuration["INFURA_URL"]);
             });
 
             services.AddSingleton<ITransactionService, TransactionService>();

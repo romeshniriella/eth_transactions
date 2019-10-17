@@ -28,10 +28,15 @@ namespace EthereumApi.Controllers
 
             if (string.IsNullOrEmpty(address))
             {
-                throw new ArgumentException("Invalid address");
+                throw new ArgumentException("Please provide the address");
             }
 
-            return await _transactionService.SearchTransactions(blockNumber.ToString("X"), address);
+            if (!address.StartsWith("0x"))
+            {
+                throw new ArgumentException("Invalid address. Must start with 0x prefix");
+            }
+
+            return await _transactionService.SearchTransactions($"0x{blockNumber:x}", address);
         }
     }
 }

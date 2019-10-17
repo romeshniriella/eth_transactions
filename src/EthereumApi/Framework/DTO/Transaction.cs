@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Globalization;
+using Newtonsoft.Json;
 
 namespace EthereumApi.Framework.DTO
 {
@@ -7,8 +9,7 @@ namespace EthereumApi.Framework.DTO
         [JsonProperty("blockHash")]
         public string BlockHash { get; set; }
 
-        [JsonProperty("blockNumber")]
-        public string BlockNumber { get; set; }
+        public long BlockNumberValue => Convert.ToInt64(HexBlockNumber, 16);
 
         [JsonProperty("from")]
         public string From { get; set; }
@@ -16,13 +17,20 @@ namespace EthereumApi.Framework.DTO
         [JsonProperty("gas")]
         public string Gas { get; set; }
 
+        public long GasValue => Convert.ToInt64(Gas, 16);
+
         [JsonProperty("hash")]
         public string Hash { get; set; }
+
+        [JsonProperty("blockNumber")]
+        public string HexBlockNumber { get; set; }
+
+        [JsonProperty("value")]
+        public string HexValue { get; set; }
 
         [JsonProperty("to")]
         public string To { get; set; }
 
-        [JsonProperty("value")]
-        public string Value { get; set; }
+        public long TransactionValue => Convert.ToInt64(HexValue, 16);
     }
 }

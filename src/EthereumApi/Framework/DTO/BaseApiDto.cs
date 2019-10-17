@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace EthereumApi.Framework.DTO
 {
@@ -8,6 +9,9 @@ namespace EthereumApi.Framework.DTO
         {
             JsonRpc = "2.0";
         }
+
+        [JsonProperty("error")]
+        public Error Error { get; set; }
 
         [JsonProperty("id")]
         public int Id { get; set; }
