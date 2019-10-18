@@ -1,17 +1,40 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>EthereumUI</title>
+    <link href="//cdn.muicss.com/mui-0.10.0/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.10.0/js/mui.min.js"></script>
 </head>
+
 <body>
     <noscript>
-        <strong>We're sorry but EthereumUI doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        <strong>We're sorry but EthereumUI doesn't work properly without JavaScript enabled. Please enable it to
+            continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <header class="mui-appbar mui--z1">
+        <div class="mui-container-fluid">
+            <table>
+                <tr class="mui--appbar-height">
+                    <td class="mui--text-title">Etherium Transactions</td>
+                </tr>
+            </table>
+        </div>
+    </header>
+    <div id="content-wrapper ">
+        <div class="mui-container-fluid"><div class="mui-panel" id="app"></div></div>
+        
+    </div>
+    <footer>
+        <div class="mui-container mui--text-center">
+            Made with ♥ by Romesh Niriella</a>
+        </div>
+    </footer>
     <!-- built files will be auto injected -->
 </body>
+
 </html>
