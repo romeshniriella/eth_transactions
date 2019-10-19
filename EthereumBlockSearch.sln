@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61D80944-4C7E-43D3-941A-EE9DA3667AA4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{61D80944-4C7E-43D3-941A-EE9DA3667AA4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6E138C32-1532-4A67-ADBC-7D2219E87FEB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6E138C32-1532-4A67-ADBC-7D2219E87FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumApi", "src\EthereumApi\EthereumApi.csproj", "{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumApi", "src\EthereumApi\EthereumApi.csproj", "{A4C5BCAD-3071-4E32-867D-71A1FA4A7CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumApi.Tests", "tests\EthereumApi.Tests\EthereumApi.Tests.csproj", "{69A38365-4710-4387-B0E4-3858E37457FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthereumApi.Tests", "tests\EthereumApi.Tests\EthereumApi.Tests.csproj", "{69A38365-4710-4387-B0E4-3858E37457FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

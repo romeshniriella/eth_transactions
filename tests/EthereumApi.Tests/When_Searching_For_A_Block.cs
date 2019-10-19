@@ -38,11 +38,11 @@ namespace EthereumApi.Tests
             [ClassData(typeof(BlockSearchTheories))]
             public async Task It_Search_For_A_Block_Transactions(string description, BlockSearchTheoryData theoryData)
             {
-                InfuraApiClientSpy apiClientSpy = new InfuraApiClientSpy()
+                InfuraApiDelegatingHandler apiClientSpy = new InfuraApiDelegatingHandler()
                     .WithResponses(theoryData.BlockSearchResponses);
 
                 TransactionsController sut = new TransactionsControllerFixture()
-                    .WithInfuraApiClient(apiClientSpy)
+                    .WithInfuraApiClientHandler(apiClientSpy)
                     .CreateSut();
 
                 var result = await sut.Get(theoryData.BlockNumber, theoryData.Address);

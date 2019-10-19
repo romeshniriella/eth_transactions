@@ -1,6 +1,10 @@
-using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using EthereumApi.Framework.DTO;
+using EthereumApi.Tests.Framework;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace EthereumApi.Tests.TheoryData
@@ -12,109 +16,120 @@ namespace EthereumApi.Tests.TheoryData
             AddTransactionContainsFromAddress();
             AddTransactionContainsToAddress();
             AddTransactionDoesNoContainAddress();
-            AddNoTransactionResults();
-        }
-
-        private void AddNoTransactionResults()
-        {
-            Add("block search result from API with no transactions", new BlockSearchTheoryData
-            {
-                BlockNumber = 8754823,
-                Address = "0xdummy",
-                BlockSearchResponses = new Queue<BlockResult>(new BlockResult[]
-                {
-                    new BlockResult
-                    {
-                        ResultStatus = ResultStatus.Success,
-                        Transactions = new List<Transaction>()
-                    },
-                }),
-                ExpectedBlockNumberRequests = new List<string>
-                {
-                    "0x859687"
-                },
-                ExpectedTransactions = new List<Transaction>()
-            });
         }
 
         private void AddTransactionContainsFromAddress()
         {
+            string fromAddress = RandomBuilder.NextHexString();
+            string toAddress = RandomBuilder.NextHexString();
+            string blockNumberHex = "0x859687";
+
             Add("block search result from API with valid From address", new BlockSearchTheoryData
             {
                 BlockNumber = 8754823,
-                Address = "0xdummy",
-                BlockSearchResponses = new Queue<BlockResult>(new BlockResult[]
+                Address = fromAddress,
+                BlockSearchResponses = new Queue<HttpResponseMessage>(new[]
                 {
-                    new BlockResult
+                    new HttpResponseMessage
                     {
-                        ResultStatus = ResultStatus.Success,
-                        Transactions = new List<Transaction>
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StringContent(JsonConvert.SerializeObject(new GetBlockByNumberResult
                         {
-                            new Transaction
+                            Result = new Result
                             {
-                                BlockHash = "0x599e122c8f70686f70a1aee81558c61f0ec37ba943c05827e13b6b7028d7d3ba",
-                                HexBlockNumber = "0x859687",
-                                From = "0xc55eddadee",
-                                Gas = "0x53a0",
-                                To = "0x9fd8dabe3706a572c5c62c973518bb55182d097b",
-                                Hash = "0xa811eee3c5d2ac931a4db47b0abaee840bd9f3b7edc6e9667e4b38adcaa13a88",
-                                HexValue = "0x2a51071c1b000"
+                                Transactions = new List<Transaction>
+                                {
+                                    new TransactionBuilder()
+                                        .WithBlockNumber(blockNumberHex)
+                                        .WithFromAddress(fromAddress)
+                                        .WithToAddress(toAddress),
+                                    new TransactionBuilder(),
+                                    new TransactionBuilder()
+                                }
                             }
-                        }
+                        }), Encoding.UTF8, "application/json")
                     },
                 }),
-                ExpectedBlockNumberRequests = new List<string>
+                ExpectedBlockNumberRequests = new List<HttpRequestMessage>
                 {
-                    "0x859687"
+                    new HttpRequestMessage(HttpMethod.Post, "http://localhost.test.svr/")
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new ApiRequest
+                        {
+                            Id = 1,
+                            Method = "eth_getBlockByNumber",
+                            Params = new object[]
+                            {
+                                blockNumberHex
+                                , true
+                            }
+                        }))
+                    }
                 },
                 ExpectedTransactions = new List<Transaction>
                 {
+                    new TransactionBuilder()
+                        .WithBlockNumber(blockNumberHex)
+                        .WithFromAddress(fromAddress)
+                        .WithToAddress(toAddress)
                 }
             });
         }
 
         private void AddTransactionContainsToAddress()
         {
-            Add("block search result from API with valid To address", new BlockSearchTheoryData
+            string fromAddress = RandomBuilder.NextHexString();
+            string toAddress = RandomBuilder.NextHexString();
+            string blockNumberHex = "0x859687";
+
+            Add("block search result from API with valid From address", new BlockSearchTheoryData
             {
                 BlockNumber = 8754823,
-                Address = "0xc55eddadee",
-                BlockSearchResponses = new Queue<BlockResult>(new BlockResult[]
+                Address = toAddress,
+                BlockSearchResponses = new Queue<HttpResponseMessage>(new[]
                 {
-                    new BlockResult
+                    new HttpResponseMessage
                     {
-                        ResultStatus = ResultStatus.Success,
-                        Transactions = new List<Transaction>
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StringContent(JsonConvert.SerializeObject(new GetBlockByNumberResult
                         {
-                            new Transaction
+                            Result = new Result
                             {
-                                BlockHash = "0x599e122c8f70686f70a1aee81558c61f0ec37ba943c05827e13b6b7028d7d3ba",
-                                HexBlockNumber = "0x859687",
-                                From = "0xfrom",
-                                Gas = "0x53a0",
-                                To = "0xc55eddadee",
-                                Hash = "0xa811eee3c5d2ac931a4db47b0abaee840bd9f3b7edc6e9667e4b38adcaa13a88",
-                                HexValue = "0x2a51071c1b000"
+                                Transactions = new List<Transaction>
+                                {
+                                    new TransactionBuilder()
+                                        .WithBlockNumber(blockNumberHex)
+                                        .WithFromAddress(fromAddress)
+                                        .WithToAddress(toAddress),
+                                    new TransactionBuilder(),
+                                    new TransactionBuilder()
+                                }
                             }
-                        }
+                        }), Encoding.UTF8, "application/json")
                     },
                 }),
-                ExpectedBlockNumberRequests = new List<string>
+                ExpectedBlockNumberRequests = new List<HttpRequestMessage>
                 {
-                    "0x859687"
+                    new HttpRequestMessage(HttpMethod.Post, "http://localhost.test.svr/")
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new ApiRequest
+                        {
+                            Id = 1,
+                            Method = "eth_getBlockByNumber",
+                            Params = new object[]
+                            {
+                                blockNumberHex
+                                , true
+                            }
+                        }))
+                    }
                 },
                 ExpectedTransactions = new List<Transaction>
                 {
-                    new Transaction
-                    {
-                        BlockHash = "0x599e122c8f70686f70a1aee81558c61f0ec37ba943c05827e13b6b7028d7d3ba",
-                        HexBlockNumber = "0x859687",
-                        From = "0xfrom",
-                        Gas = "0x53a0",
-                        To = "0xc55eddadee",
-                        Hash = "0xa811eee3c5d2ac931a4db47b0abaee840bd9f3b7edc6e9667e4b38adcaa13a88",
-                        HexValue = "0x2a51071c1b000"
-                    }
+                    new TransactionBuilder()
+                        .WithBlockNumber(blockNumberHex)
+                        .WithFromAddress(fromAddress)
+                        .WithToAddress(toAddress)
                 }
             });
         }
@@ -124,44 +139,43 @@ namespace EthereumApi.Tests.TheoryData
             Add("block search result from API with address does not exist", new BlockSearchTheoryData
             {
                 BlockNumber = 8754823,
-                Address = "0xc55eddadee",
-                BlockSearchResponses = new Queue<BlockResult>(new BlockResult[]
+                Address = "0xdummy",
+                BlockSearchResponses = new Queue<HttpResponseMessage>(new[]
                 {
-                    new BlockResult
+                    new HttpResponseMessage
                     {
-                        ResultStatus = ResultStatus.Success,
-                        Transactions = new List<Transaction>
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StringContent(JsonConvert.SerializeObject(new GetBlockByNumberResult
                         {
-                            new Transaction
+                            Result = new Result
                             {
-                                BlockHash = "0x599e122c8f70686f70a1aee81558c61f0ec37ba943c05827e13b6b7028d7d3ba",
-                                HexBlockNumber = "0x859687",
-                                From = "0xc55eddadee",
-                                Gas = "0x53a0",
-                                To = "0x9fd8dabe3706a572c5c62c973518bb55182d097b",
-                                Hash = "0xa811eee3c5d2ac931a4db47b0abaee840bd9f3b7edc6e9667e4b38adcaa13a88",
-                                HexValue = "0x2a51071c1b000"
+                                Transactions = new List<Transaction>
+                                {
+                                    new TransactionBuilder(),
+                                    new TransactionBuilder(),
+                                    new TransactionBuilder()
+                                }
                             }
-                        }
+                        }), Encoding.UTF8, "application/json")
                     },
                 }),
-                ExpectedBlockNumberRequests = new List<string>
+                ExpectedBlockNumberRequests = new List<HttpRequestMessage>
                 {
-                    "0x859687"
-                },
-                ExpectedTransactions = new List<Transaction>
-                {
-                    new Transaction
+                    new HttpRequestMessage(HttpMethod.Post, "http://localhost.test.svr/")
                     {
-                        BlockHash = "0x599e122c8f70686f70a1aee81558c61f0ec37ba943c05827e13b6b7028d7d3ba",
-                        HexBlockNumber = "0x859687",
-                        From = "0xc55eddadee",
-                        Gas = "0x53a0",
-                        To = "0x9fd8dabe3706a572c5c62c973518bb55182d097b",
-                        Hash = "0xa811eee3c5d2ac931a4db47b0abaee840bd9f3b7edc6e9667e4b38adcaa13a88",
-                        HexValue = "0x2a51071c1b000"
+                        Content = new StringContent(JsonConvert.SerializeObject(new ApiRequest
+                        {
+                            Id = 1,
+                            Method = "eth_getBlockByNumber",
+                            Params = new object[]
+                            {
+                                "0x859687"
+                                , true
+                            }
+                        }))
                     }
-                }
+                },
+                ExpectedTransactions = new List<Transaction>()
             });
         }
     }
