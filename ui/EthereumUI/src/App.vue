@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Home msg="Search Etherium Block" />
+        <Home />
     </div>
 </template>
 

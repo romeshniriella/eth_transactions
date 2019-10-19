@@ -1,19 +1,28 @@
 <template>
   <div class="home">
-    <h4>{{ msg }}</h4>
-    <form class="mui-form--inline">
+    <h4>Search Etherium Block</h4>
+    <form class="mui-form--inline" v-on:submit.prevent="searchBlock">
       <div class="mui-textfield mui-textfield--float-label">
-        <input type="text" /> // bind to these inputs - props
-        <label>Block Number</label>
+        <input type="text" v-model="blockNumber" /> 
+        <label>Block Number e.g:123456</label>
       </div>
       <div class="mui-textfield mui-textfield--float-label"> 
-        <input type="text" value /> // bind to these inputs - props
+        <input type="text" v-model="address"   /> 
         <label>Address e.g: 0xffffffffffffffffffffffffffffff</label>
       </div>
-      <button class="mui-btn">submit</button> // click this button - event handler
+      <button class="mui-btn"  >submit</button>  
     </form>
+    <div v-if="searching">
+				<i>Searching...</i>
+			</div>
+      <div v-if="noResults">
+				Sorry, but no results were found.
+			</div>
+       <div v-if="error">
+				An error occured. Please try again.
+			</div>
     <br/>
-    <Transactions />
+    <Transactions :records=results />
   </div>
 </template>
 
@@ -24,15 +33,31 @@ import Transactions from "../components/Transactions.vue";
 @Component({
   components: {
     Transactions
-  }
+  } 
 })
 export default class Home extends Vue {
-  @Prop() private msg!: string;
-  // submit event handler
-  // props to bind to search inputs
-  // method to get data from server
-  // logic to put data in transactions component
-  //    Transactions component -> render data when I pass in data
+  blockNumber = "8754823";
+  address = "0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa";
+
+  searching = false;
+  noResults = false;
+  error = false;
+  results=[];
+
+  searchBlock(){
+    this.searching = true;
+    this.error = false;
+    fetch(`https://localhost:44388/api/Transactions/${encodeURIComponent(this.blockNumber)}/${encodeURIComponent(this.address)}`)
+			.then(res => res.json())
+			.then(res => { 
+				this.searching = false;
+				this.results = res;
+				this.noResults = this.results.length === 0;
+      }).catch( err => {
+        this.error = true;
+        this.searching = false;
+      });
+  } 
 }
 </script>
 

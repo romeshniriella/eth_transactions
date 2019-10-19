@@ -12,32 +12,24 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Cell 1-1</td>
-      <td>Cell 1-2</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Cell 2-1</td>
-      <td>Cell 2-2</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
+    <tr v-for="transaction in records" v-bind:key="transaction.hash">
+      <td>{{transaction.blockHash}}</td>
+      <td>{{transaction.blockNumberValue}}</td>
+      <td>{{transaction.gas}}</td>
+      <td>{{transaction.hash}}</td>
+      <td>{{transaction.from}}</td>
+      <td>{{transaction.to}}</td>
+      <td>{{transaction.transactionValue}}</td>
+    </tr> 
   </tbody>
     </table>
 </template>
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
 
   @Component
-  export default class Transactions extends Vue {
-      
+  export default class Transactions extends Vue { 
+      @Prop()
+      records = [];
   }
 </script>
