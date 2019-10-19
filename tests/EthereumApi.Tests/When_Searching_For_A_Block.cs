@@ -31,5 +31,27 @@ namespace EthereumApi.Tests
                     .BeEquivalentTo(theoryData.ExpectedBlockNumberRequests, description);
             }
         }
+
+        public class And_The_Data_Is_Valid
+        {
+            [Theory]
+            [ClassData(typeof(BlockSearchTheories))]
+            public async Task It_Search_For_A_Block_Transactions(string description, BlockSearchTheoryData theoryData)
+            {
+                InfuraApiClientSpy apiClientSpy = new InfuraApiClientSpy()
+                    .WithResponses(theoryData.BlockSearchResponses);
+
+                TransactionsController sut = new TransactionsControllerFixture()
+                    .WithInfuraApiClient(apiClientSpy)
+                    .CreateSut();
+
+                var result = await sut.Get(theoryData.BlockNumber, theoryData.Address);
+
+                apiClientSpy.BlockNumberRequests.Should()
+                    .BeEquivalentTo(theoryData.ExpectedBlockNumberRequests, description);
+
+                result.Value.Should().BeEquivalentTo(theoryData.ExpectedTransactions);
+            }
+        }
     }
 }
